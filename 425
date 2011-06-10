@@ -44,6 +44,14 @@ resize()
   zero_or_die convert -resize "${size}x${size}" ${opts} "${src}" "${dest}"
 }
 
+rotate()
+{
+  local src="$1"
+  local deg="$2"
+  local dest="$3"
+  zero_or_die bash rotate3D "${deg},0,0" "${src}" "${dest}"
+}
+
 max=512
 html4="HTML4_Badge.png"
 html5="HTML5_Badge.png"
@@ -56,6 +64,12 @@ do
   resize "${size}" "${i}" "${html4}" "`get_name 4 ${i}`"
   resize "${size}" "${i}" "${html5}" "`get_name 5 ${i}`"
 done
-zero_or_die convert -delay 5 -loop 0 `ls -r html4_*.png` html5_*.png 425.gif
+rm -f html[45]_${min}_*.png
+for i in 20 40 60 80
+do
+  rotate "`get_name 4 "${min}"`" "${i}" "html4_${min}_${i}.png"
+  rotate "`get_name 5 "${min}"`" "-${i}" "html5_${min}_${i}.png"
+done
+zero_or_die convert -delay 5 -loop 0 `ls -r html4_???.png` html4_${min}_??.png `ls -r html5_${min}_??.png` html5_???.png 425.gif
 
 # vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2
