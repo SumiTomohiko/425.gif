@@ -1,0 +1,61 @@
+#!/bin/sh
+
+get_name()
+{
+  local ver=$1
+  local size=$2
+  echo "html${ver}_${size}.png"
+}
+
+get_geometry()
+{
+  local size="$1"
+  echo "${size}x${size}"
+}
+
+get_convert_opts()
+{
+  local max="$1"
+  local size="$2"
+  if [ "${max}" -lt "${size}" ]; then
+    echo "-shave `get_geometry "$(((${size} - ${max}) / 2))"`"
+    exit 0
+  fi
+  echo "-border `get_geometry "$(((${max} - ${size}) / 2))"`"
+}
+
+zero_or_die()
+{
+  "$@"
+  if [ $? != 0 ]; then
+    echo "Failed: $@"
+    exit 1
+  fi
+}
+
+resize()
+{
+  local max="$1"
+  local size="$2"
+  local src="$3"
+  local dest="$4"
+
+  opts=`get_convert_opts "${max}" "${size}"`
+  zero_or_die convert -resize "${size}x${size}" ${opts} "${src}" "${dest}"
+}
+
+max=512
+html4="HTML4_Badge.png"
+html5="HTML5_Badge.png"
+
+reps=8
+min=180
+size=360
+for i in `jot "${reps}" "${max}" "${min}"`
+do
+  resize "${size}" "${i}" "${html4}" "`get_name 4 ${i}`"
+  resize "${size}" "${i}" "${html5}" "`get_name 5 ${i}`"
+done
+zero_or_die convert -delay 5 -loop 0 `ls -r html4_*.png` html5_*.png 425.gif
+
+# vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2
