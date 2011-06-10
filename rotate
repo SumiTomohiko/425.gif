@@ -1,0 +1,93 @@
+#!/bin/sh
+
+zero_or_die()
+{
+  "$@"
+  if [ $? != 0 ]; then
+    echo "Failed: $@"
+    exit 1
+  fi
+}
+
+calc()
+{
+  local expr="$1"
+  echo "${expr}" | zero_or_die bc -l
+}
+
+calc_pos_rot_z()
+{
+  local x="$1"
+  local y="$2"
+  local rad="$3"
+  local x0="$4"
+  calc "(${x0} - ${x}) * s(${rad})"
+}
+
+calc_pos_rot_x()
+{
+  local x="$1"
+  local y="$2"
+  local rad="$3"
+  local x0="$4"
+  calc "(${x} - ${x0}) * c(${rad}) + ${x0}"
+}
+
+calc_pos_scr_y()
+{
+  local y="$1"
+  local z="$2"
+  local x0="$3"
+  local size="$4"
+  calc "(${y} - ${x0}) / (${size} - ${z}) * ${size} + ${x0}"
+}
+
+calc_pos_scr_x()
+{
+  local x="$1"
+  local z="$2"
+  local x0="$3"
+  local size="$4"
+  calc "(${x} - ${x0}) / (${size} - ${z}) * ${size} + ${x0}"
+}
+
+compute()
+{
+  local x="$1"
+  local y="$2"
+  local rad="$3"
+  local x0="$4"
+  local size="$5"
+  local rot_params="${x} ${y} ${rad} ${x0}"
+  local rot_x=`calc_pos_rot_x ${rot_params}`
+  local rot_y="${y}"
+  local rot_z=`calc_pos_rot_z ${rot_params}`
+  local scr_x=`calc_pos_scr_x ${rot_x} ${rot_z} ${x0} ${size}`
+  local scr_y=`calc_pos_scr_y ${rot_y} ${rot_z} ${x0} ${size}`
+  echo "${scr_x},${scr_y}"
+}
+
+build_perspective_data()
+{
+  local x="$1"
+  local y="$2"
+  local rad="$3"
+  local x0="$4"
+  local size="$5"
+  local data=`compute ${x} ${y} ${rad} ${x0} ${size}`
+  echo "${x},${y} ${data}"
+}
+
+deg=$1
+rad=`calc "${deg} / 180 * 3.14"`
+size=360
+x0=$((${size} / 2))
+data1=`build_perspective_data 0 0 ${rad} ${x0} ${size}`
+data2=`build_perspective_data 0 ${size} ${rad} ${x0} ${size}`
+data3=`build_perspective_data ${size} 0 ${rad} ${x0} ${size}`
+data4=`build_perspective_data ${size} ${size} ${rad} ${x0} ${size}`
+src="$2"
+dest="$3"
+convert "${src}" -virtual-pixel background -background black -mattecolor black -distort perspective "${data1} ${data2} ${data3} ${data4}" "${dest}"
+
+# vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2

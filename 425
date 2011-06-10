@@ -49,7 +49,7 @@ rotate()
   local src="$1"
   local deg="$2"
   local dest="$3"
-  zero_or_die bash rotate3D "${deg},0,0" "${src}" "${dest}"
+  zero_or_die ./rotate "${deg}" "${src}" "${dest}"
 }
 
 max=512

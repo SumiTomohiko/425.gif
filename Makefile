@@ -4,7 +4,7 @@ inkscape = inkscape --export-width=512 --export-height=512 --export-background=b
 
 all: $(PKG)
 
-$(PKG): 425 HTML4_Badge.png HTML5_Badge.png
+$(PKG): 425 rotate HTML4_Badge.png HTML5_Badge.png Makefile
 	./425
 
 HTML4_Badge.png: HTML4_Badge.svg Makefile
