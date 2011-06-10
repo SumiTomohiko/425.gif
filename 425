@@ -21,7 +21,7 @@ get_convert_opts()
     echo "-shave `get_geometry "$(((${size} - ${max}) / 2))"`"
     exit 0
   fi
-  echo "-border `get_geometry "$(((${max} - ${size}) / 2))"`"
+  echo "-border `get_geometry "$(((${max} - ${size}) / 2))"` -bordercolor black"
 }
 
 zero_or_die()

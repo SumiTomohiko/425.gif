@@ -1,6 +1,6 @@
 
 PKG = 425.gif
-inkscape = inkscape --export-width=512 --export-height=512
+inkscape = inkscape --export-width=512 --export-height=512 --export-background=black
 
 all: $(PKG)
 
