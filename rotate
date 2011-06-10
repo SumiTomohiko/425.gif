@@ -80,13 +80,13 @@ build_perspective_data()
 
 deg=$1
 rad=`calc "${deg} / 180 * 3.14"`
-size=360
+src="$2"
+size=`identify -format %w "${src}"`
 x0=$((${size} / 2))
 data1=`build_perspective_data 0 0 ${rad} ${x0} ${size}`
 data2=`build_perspective_data 0 ${size} ${rad} ${x0} ${size}`
 data3=`build_perspective_data ${size} 0 ${rad} ${x0} ${size}`
 data4=`build_perspective_data ${size} ${size} ${rad} ${x0} ${size}`
-src="$2"
 dest="$3"
 convert "${src}" -virtual-pixel background -background black -mattecolor black -distort perspective "${data1} ${data2} ${data3} ${data4}" "${dest}"
 
