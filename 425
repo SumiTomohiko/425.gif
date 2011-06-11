@@ -52,11 +52,13 @@ rotate()
   zero_or_die ./rotate "${deg}" "${src}" "${dest}"
 }
 
-max=512
 html4="HTML4_Badge.png"
 html5="HTML5_Badge.png"
+max=`identify -format %w "${html4}"`
 
-reps=8
+rm -f html[45]_*.png
+
+reps=12
 min=180
 size=360
 for i in `jot "${reps}" "${max}" "${min}"`
@@ -64,7 +66,6 @@ do
   resize "${size}" "${i}" "${html4}" "`get_name 4 ${i}`"
   resize "${size}" "${i}" "${html5}" "`get_name 5 ${i}`"
 done
-rm -f html[45]_${min}_*.png
 for i in 20 40 60 80
 do
   rotate "`get_name 4 "${min}"`" "${i}" "html4_${min}_${i}.png"

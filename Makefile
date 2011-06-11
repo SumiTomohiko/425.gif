@@ -2,7 +2,8 @@
 IMG1 = 425.gif
 IMG2 = doc/425.gif
 PKG = $(IMG1) $(IMG2)
-inkscape = inkscape --export-width=512 --export-height=512 --export-background=black
+SIZE = 768
+inkscape = inkscape --export-width=$(SIZE) --export-height=$(SIZE) --export-background=black
 
 all: $(PKG)
 
