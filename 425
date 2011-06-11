@@ -59,7 +59,7 @@ max=`identify -format %w "${html4}"`
 rm -f html[45]_*.png
 
 reps=12
-min=180
+min=200
 size=360
 for i in `jot "${reps}" "${max}" "${min}"`
 do
