@@ -1,5 +1,18 @@
 
+@font-face {
+  font-family: "mainfont";
+
+  /**
+   * Lisence Information about Junction
+   *
+   * Lisence: Open Font Library
+   * Author: Caroline Hadilaksono (www.hadilaksono.com)
+   */
+  src: url("Junction 02.ttf") format("truetype");
+}
+
 body {
+  font-family: "mainfont";
   margin: 0px;
 }
 
