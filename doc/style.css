@@ -1,0 +1,30 @@
+
+body {
+  margin: 0px;
+}
+
+h1, img, p {
+  padding: 10px;
+}
+
+table {
+  border: 1px solid;
+  margin: 10px;
+}
+
+th {
+  background-color: black;
+  color: white;
+}
+
+td {
+  border: 1px solid;
+}
+
+td.numeric {
+  text-align: right;
+}
+
+/**
+ * vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2
+ */
