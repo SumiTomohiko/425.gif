@@ -11,7 +11,7 @@ HTML5 log (http://www.w3c.org/html/logo/).
 Lisence
 =======
 
-See ``COPYING``.
+See ``COPYING.rst``.
 
 How to Build from Sources
 =========================
@@ -33,7 +33,7 @@ Run only::
 Author
 ======
 
-The author is SumiTomohiko
-(http://neko-daisuki.ddo.jp/~SumiTomohiko/index.html).
+The author is
+`Tomohiko Sumi <http://neko-daisuki.ddo.jp/~SumiTomohiko/index.html>`_.
 
 .. vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2 filetype=rst
